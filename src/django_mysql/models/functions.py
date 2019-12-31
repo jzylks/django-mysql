@@ -278,8 +278,8 @@ class JSONLength(Func):
 
 
 class JSONValue(Func):
-    function = "CAST"
-    template = "%(function)s(%(expressions)s AS JSON)"
+    function = "JSON_COMPACT"
+    template = "%(function)s(%(expressions)s)"
 
     def __init__(self, expression):
         json_string = json.dumps(expression, allow_nan=False)

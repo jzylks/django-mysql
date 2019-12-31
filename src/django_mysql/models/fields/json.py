@@ -73,17 +73,18 @@ class JSONField(Field):
         for _alias, conn in mysql_connections():
             if (
                 hasattr(conn, "mysql_version")
-                and not connection_is_mariadb(conn)
-                and conn.mysql_version >= (5, 7)
+                and connection_is_mariadb(conn)
+                and conn.mysql_version >= (10, 2, 7)
             ):
                 any_conn_works = True
 
         if not any_conn_works:
             errors.append(
                 checks.Error(
-                    "MySQL 5.7+ is required to use JSONField",
+                    "MariaDB 10.2.7+ is required to use JSONField",
                     hint="At least one of your DB connections should be to "
-                    "MySQL 5.7+",
+                    "MariaDB 10.2.7+. For MySQL 5.7+, install django-mysql "
+                    "from pip.",
                     obj=self,
                     id="django_mysql.E016",
                 )
